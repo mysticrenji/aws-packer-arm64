@@ -12,7 +12,10 @@ on:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+env:
+  aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
+  aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  html_file: ${{ secrets.HTML_FILE }}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -31,4 +34,5 @@ jobs:
           echo Starting validation...
           packer validate image.json
         working-directory: ./aws-arm64/images/
+
           
