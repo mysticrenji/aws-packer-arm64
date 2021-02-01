@@ -4,6 +4,7 @@ metadata:
   name: github-runner
   labels:
     app: github-runner
+  namespace: runners
 spec:
   replicas: 1
   selector:
