@@ -1,51 +1,29 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: actions-runner
-  namespace: runners
+  name: github-runner
+  labels:
+    app: github-runner
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: actions-runner
+      app: github-runner
   template:
     metadata:
       labels:
-        app: actions-runner
+        app: github-runner
     spec:
-      volumes:
-      - name: dockersock
-        hostPath:
-          path: /var/run/docker.sock
-      - name: workdir
-        hostPath:
-          path: /tmp/github-runner-your-repo
       containers:
-      - name: runner
-        image: myoung34/github-runner:latest
+      - name: github-runner
+        image: sanderknape/github-runner:latest
         env:
-        - name: ORG_RUNNER
-          value: "true"
-        - name: ORG_NAME
-          value: octokode
-        - name: LABELS
-          value: my-label,other-label
-        - name: RUNNER_TOKEN
-          value: footoken
-        - name: REPO_URL
-          value: https://github.com/mysticrenji/aws-packer-arm64
-        - name: RUNNER_NAME_PREFIX
-          value: foo
-        - name: RUNNER_NAME
+        - name: GITHUB_OWNER
+          value: your-organization
+        - name: GITHUB_REPOSITORY
+          value: your-repository
+        - name: GITHUB_PAT # stored separately in a Kubernetes Secret
           valueFrom:
-            fieldRef:
-              fieldPath: metadata.name
-        - name: RUNNER_WORKDIR
-          value: /tmp/aws-packer-arm64
-        - name: RUNNER_GROUP
-          value: my-group
-        volumeMounts:
-        - name: dockersock
-          mountPath: /var/run/docker.sock
-        - name: workdir
-          mountPath: /tmp/aws-packer-arm64
+            secretKeyRef:
+              name: my-secret
+              key: pat
