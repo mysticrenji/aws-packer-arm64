@@ -30,12 +30,3 @@ jobs:
         run: |
           echo Test Packer Build
           
-      - name: Packer build
-        uses: riznob/packer-build-action@v1.1
-        with:
-          # Packer template file to use for packer build
-          templateFile: images.json  # optional, default is packer-template.json
-          # Var file to use for packer build
-          varFile: 'html_file=index.html'
-          # Directory where the packer template and var file reside
-          workingDir: ./aws-arm64/images
