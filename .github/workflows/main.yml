@@ -29,4 +29,6 @@ jobs:
       - name: Run a multi-line script
         run: |
           echo Test Packer Build
+          packer
+          terraform
           
