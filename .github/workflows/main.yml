@@ -29,6 +29,6 @@ jobs:
       - name: Packer Validate
         run: |
           echo Starting validation...
-          packer validate
+          packer validate images.json
         working-directory: ./aws-arm64/images/
           
