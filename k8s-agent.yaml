@@ -25,5 +25,5 @@ spec:
         - name: GITHUB_PAT # stored separately in a Kubernetes Secret
           valueFrom:
             secretKeyRef:
-              name: my-secret
+              name: my-pat
               key: pat
