@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: actions-runner
+  namespace: runners
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: actions-runner
+  template:
+    metadata:
+      labels:
+        app: actions-runner
+    spec:
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: workdir
+        hostPath:
+          path: /tmp/github-runner-your-repo
+      containers:
+      - name: runner
+        image: myoung34/github-runner:latest
+        env:
+        - name: ORG_RUNNER
+          value: "true"
+        - name: ORG_NAME
+          value: octokode
+        - name: LABELS
+          value: my-label,other-label
+        - name: RUNNER_TOKEN
+          value: footoken
+        - name: REPO_URL
+          value: https://github.com/mysticrenji/aws-packer-arm64
+        - name: RUNNER_NAME_PREFIX
+          value: foo
+        - name: RUNNER_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        - name: RUNNER_WORKDIR
+          value: /tmp/aws-packer-arm64
+        - name: RUNNER_GROUP
+          value: my-group
+        volumeMounts:
+        - name: dockersock
+          mountPath: /var/run/docker.sock
+        - name: workdir
+          mountPath: /tmp/aws-packer-arm64
