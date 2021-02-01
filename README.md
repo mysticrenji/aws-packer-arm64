@@ -1,2 +1,2 @@
 # aws-packer-arm64
-Bake image AWS image on arm64
+Bake  AWS image on arm64
