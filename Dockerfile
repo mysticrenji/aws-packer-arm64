@@ -1,6 +1,8 @@
 FROM arm64v8/debian:buster-slim
 
 ARG GITHUB_RUNNER_VERSION="2.276.1"
+ARG DOCKER_CLI_VERSION="18.06.3-ce"
+ENV DOWNLOAD_URL="https://download.docker.com/linux/static/edge/aarch64/docker-$DOCKER_CLI_VERSION.tgz"
 
 ENV RUNNER_NAME "github-runner-arm64"
 ENV GITHUB_PAT ""
@@ -20,6 +22,9 @@ RUN apt-get update \
         wget \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
+    && curl -L $DOWNLOAD_URL | tar -xz -C /tmp/download \
+    && mv /tmp/download/docker/docker /usr/local/bin/ \
+    && rm -rf /tmp/download \
     && useradd -m github \
     && usermod -aG sudo github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
