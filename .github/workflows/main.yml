@@ -32,9 +32,10 @@ jobs:
       - name: Packer Validate
         run: |
           echo Starting validation...
+          docker
         working-directory: ./aws-arm64/images/
         
-      - uses: santisaez/packer-action@v1
-        with:
-          template: ./aws-arm64/images/image.json
+  #    - uses: santisaez/packer-action@v1
+  #      with:
+  #        template: ./aws-arm64/images/image.json
           
