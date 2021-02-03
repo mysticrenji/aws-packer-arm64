@@ -22,9 +22,6 @@ RUN apt-get update \
         wget \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
-    && curl -L $DOWNLOAD_URL | tar -xz -C /tmp/download \
-    && mv /tmp/download/docker/docker /usr/local/bin/ \
-    && rm -rf /tmp/download \
     && useradd -m github \
     && usermod -aG sudo github \
     && echo "%sudo ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
@@ -38,9 +35,12 @@ RUN wget https://releases.hashicorp.com/packer/${PACKER_VERSION}/packer_${PACKER
 RUN wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_arm64.zip && unzip terraform_${TERRAFORM_VERSION}_linux_arm64.zip \
     && sudo mv terraform /usr/local/bin/
     
-
 RUN curl -Ls https://github.com/actions/runner/releases/download/v${GITHUB_RUNNER_VERSION}/actions-runner-linux-arm64-${GITHUB_RUNNER_VERSION}.tar.gz | tar xz \
     && sudo ./bin/installdependencies.sh
+
+RUN mkdir -p /tmp/docker/ && curl -Ls https://download.docker.com/linux/static/edge/aarch64/docker-${DOCKER_CLI_VERSION}.tgz | tar -xz -C /tmp/docker/ \
+    && sudo mv /tmp/docker/ /usr/local/bin/ \
+    && rm  -rf /tmp/docker/
 
 COPY --chown=github:github entrypoint.sh ./entrypoint.sh
 RUN sudo chmod u+x ./entrypoint.sh
