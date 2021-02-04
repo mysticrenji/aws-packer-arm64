@@ -39,11 +39,11 @@ RUN curl -Ls https://github.com/actions/runner/releases/download/v${GITHUB_RUNNE
     && sudo ./bin/installdependencies.sh
 
 RUN mkdir -p /tmp/docker/ && curl -Ls https://download.docker.com/linux/static/edge/aarch64/docker-${DOCKER_CLI_VERSION}.tgz | tar -xz -C /tmp/docker/ \
-    && sudo mv /tmp/docker/ /usr/local/bin/ \
+    && sudo mv /tmp/docker/docker/* /usr/local/bin/ \
     && rm  -rf /tmp/docker/
 
 COPY --chown=github:github entrypoint.sh ./entrypoint.sh
 RUN sudo chmod u+x ./entrypoint.sh
 
-
-ENTRYPOINT ["/home/github/entrypoint.sh"]
+CMD ["/bin/bash"]
+#ENTRYPOINT ["/home/github/entrypoint.sh"]
