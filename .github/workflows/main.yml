@@ -28,10 +28,14 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a set of commands using the runners shell
-      - name: Packer Validate
-        run: |
-          echo Starting validation...
-          docker
-        working-directory: ./aws-arm64/images/
-
+      - name: Packer GitHub Actions
+        # You may pin to the exact commit or the version.
+        # uses: operatehappy/packer-github-actions@2ef5cf325f2beace99a1742903eb52542765c08f
+        uses: operatehappy/packer-github-actions@v0.2.0
+        with:
+          # command to execute
+          command:  validate
+          # arguments for command
+          arguments:  -syntax-only
+          # file(s) to target
+          target: ./aws-arm64/images/image.json
