@@ -35,7 +35,7 @@ jobs:
         with:
           # command to execute
           command:  validate
-          # arguments for command
+          # arguments for command 
           arguments:  -syntax-only
           # file(s) to target
           target: ./aws-arm64/images/image.json
