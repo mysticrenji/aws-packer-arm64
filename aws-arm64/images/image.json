@@ -2,7 +2,7 @@
     "variables": {
         "html_file": "{{env `HTML_FILE`}}",
         "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
-        "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
+        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}"
       },
       "builders": [
         {
