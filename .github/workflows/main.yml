@@ -33,5 +33,10 @@ jobs:
           echo "Validating Image Files.."
           packer validate -syntax-only image.json
         working-directory: ./aws-arm64/images/
+      - name: Packer Build & Deploy
+        run: |
+          echo "Starting Baking Image Files.."
+          packer build image.json
+        working-directory: ./aws-arm64/images/
           
 
