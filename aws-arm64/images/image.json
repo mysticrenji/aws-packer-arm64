@@ -1,6 +1,6 @@
 {
     "variables": {
-        "html_file": "",
+        "html_file": "{{env `HTML_FILE`}}",
         "aws_access_key": "{{env `AWS_ACCESS_KEY`}}",
         "aws_secret_key": "{{env `AWS_SECRET_KEY`}}"
       },
@@ -10,15 +10,7 @@
           "access_key": "{{user `aws_access_key`}}",
           "secret_key": "{{user `aws_secret_key`}}",
           "region": "us-east-2",
-          "source_ami_filter": {
-            "filters": {
-              "virtualization-type": "hvm",
-              "name": "ubuntu/images/hvm-ssd/ubuntu-bionic-18.04-arm64-server-*",
-              "root-device-type": "ebs"
-            },
-            "owners": ["099720109477"],
-            "most_recent": true
-          },
+          "source_ami": "ami-09e38cf07be65a594",
           "instance_type": "t4g.micro",
           "ssh_username": "ubuntu",
           "ami_name": "packer-ubuntu-arm64 {{timestamp}}"
