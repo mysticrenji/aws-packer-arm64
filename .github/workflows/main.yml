@@ -15,7 +15,6 @@ on:
 env:
   AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
   AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-  html_file: ${{ secrets.HTML_FILE }}
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -31,12 +30,12 @@ jobs:
       - name: Packer Validate
         run: |
           echo "Validating Image Files.."
-          packer validate -syntax-only image.json
+          packer validate -syntax-only Test.json
         working-directory: ./aws-arm64/images/
       - name: Packer Build & Deploy
         run: |
           echo "Starting Baking Image Files.."
-          packer build image.json
+          packer build Test.json
         working-directory: ./aws-arm64/images/
 
           
