@@ -32,6 +32,6 @@ jobs:
       - name: Docker Push
         run: |
             echo Building Docker image
-            echo ${{ secrets.CR_PAT }}; docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
+            echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
             docker build . --tag ghcr.io/mysticrenji/aws-packer-arm64:latest
             docker push ghcr.io/mysticrenji/aws-packer-arm64:latest
