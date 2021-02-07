@@ -15,16 +15,25 @@ spec:
       labels:
         app: github-runner
     spec:
+      securityContext:
+        fsGroup: 127    # Group ID of docker group 
       containers:
       - name: github-runner
-        image: mysticrenji/githubrunner-arm64
+        image: ghcr.io/mysticrenji/aws-packer-arm64:latest
         env:
         - name: GITHUB_OWNER
-          value: your-organization
+          value: mysticrenji
         - name: GITHUB_REPOSITORY
-          value: your-repository
+          value: aws-packer-arm64
         - name: GITHUB_PAT # stored separately in a Kubernetes Secret
           valueFrom:
             secretKeyRef:
               name: my-pat
               key: pat
+        volumeMounts:
+          - name: dockersock
+            mountPath: "/var/run/docker.sock"
+      volumes:
+      - name: dockersock
+        hostPath:
+          path: /var/run/docker.sock
