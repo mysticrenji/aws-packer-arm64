@@ -9,14 +9,10 @@ on:
     branches: [ main ]
     paths:
     - 'Dockerfile'
-    paths-ignore:
-    - '**'
   pull_request:
     branches: [ main ]
     paths:
     - 'Dockerfile'
-    paths-ignore:
-    - '**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -37,5 +33,5 @@ jobs:
         run: |
             echo Building Docker image
             echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u $GITHUB_ACTOR --password-stdin
-            docker build . --tag ghcr.io/mysticrenji/aws-packer-arm64:latest
-            docker push ghcr.io/mysticrenji/aws-packer-arm64:latest
+            nvidia-docker build . --tag ghcr.io/mysticrenji/aws-packer-arm64:latest
+            nvidia-docker push ghcr.io/mysticrenji/aws-packer-arm64:latest
